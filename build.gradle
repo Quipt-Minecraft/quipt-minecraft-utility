@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'me.quickscythe'
+version = "${project_version}-${build_status}-B${build_number}"
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "quipt"
+        url = "https://repo.vanillaflux.com/repository/quipt/"
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation "org.json:json:$json_version"
+    implementation "me.quickscythe:quipt-core:$quipt_core_version"
+}
+
+test {
+    useJUnitPlatform()
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = 'localRepo'
+            url = layout.buildDirectory.dir("repo")
+        }
+    }
+}
+
+def targetJavaVersion = Integer.parseInt(java_version)
+java {
+    withSourcesJar()
+    withJavadocJar()
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
