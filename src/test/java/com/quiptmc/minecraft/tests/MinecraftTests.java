@@ -1,7 +1,7 @@
-package me.quickscythe.quipt.minecraft.tests;
+package com.quiptmc.minecraft.tests;
 
-import me.quickscythe.quipt.minecraft.MinecraftServer;
-import me.quickscythe.quipt.minecraft.MinecraftServerPlayer;
+import com.quiptmc.minecraft.MinecraftServer;
+import com.quiptmc.minecraft.MinecraftServerPlayer;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

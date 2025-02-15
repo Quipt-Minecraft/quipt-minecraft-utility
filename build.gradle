@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'me.quickscythe'
+group = "com.quiptmc"
 version = "${project_version}-${build_status}-B${build_number}"
 
 repositories {
@@ -19,7 +19,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation "org.json:json:$json_version"
-    implementation "me.quickscythe:quipt-core:$quipt_core_version"
+    implementation "com.quiptmc:quipt-core:$quipt_core_version"
 }
 
 test {

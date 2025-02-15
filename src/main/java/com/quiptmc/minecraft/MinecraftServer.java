@@ -1,7 +1,7 @@
-package me.quickscythe.quipt.minecraft;
+package com.quiptmc.minecraft;
 
-import me.quickscythe.quipt.api.utils.NetworkUtils;
-import me.quickscythe.quipt.api.utils.TaskScheduler;
+import com.quiptmc.core.utils.NetworkUtils;
+import com.quiptmc.core.utils.TaskScheduler;
 import org.json.JSONObject;
 
 import java.util.*;

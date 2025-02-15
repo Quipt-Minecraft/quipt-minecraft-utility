@@ -1,4 +1,4 @@
-package me.quickscythe.quipt.minecraft;
+package com.quiptmc.minecraft;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
