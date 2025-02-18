@@ -12,9 +12,13 @@ public class MinecraftServerPlayer {
 
     public MinecraftServerPlayer(MinecraftServer server, UUID uuid) {
         this.server = server;
-        if(!server.data.has("player_stats")) throw new IllegalArgumentException("No player stats found");
+        if(server.apiManager().isEmpty()) throw new IllegalArgumentException("No api manager found. Api manager must be set up to get player data");
+
+        MinecraftServer.ApiManager.ApiResponse response = server.data();
+        JSONObject raw = response.raw();
+        if(!raw.has("player_stats")) throw new IllegalArgumentException("No player stats found");
         data = new JSONObject();
-        JSONArray array = server.data.getJSONArray("player_stats");
+        JSONArray array = raw.getJSONArray("player_stats");
         for(int i = 0; i < array.length(); i++){
             JSONObject player = array.getJSONObject(i);
             if(player.getString("uuid").equals(uuid.toString())){
@@ -22,7 +26,6 @@ public class MinecraftServerPlayer {
                 break;
             }
         }
-//        data = new JSONObject();
     }
 
     public String name() {
@@ -38,6 +41,7 @@ public class MinecraftServerPlayer {
     }
 
     public void sendMessage(String message) {
-        server.sendMessage(uuid(), message);
+        if(server.apiManager().isEmpty()) throw new IllegalArgumentException("No api manager found. Api manager must be set up to send messages");
+        server.apiManager().get().sendMessage(uuid(), message);
     }
 }
